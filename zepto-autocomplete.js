@@ -5,11 +5,26 @@
   		var settings = $.extend({
   			data:   [],
   			height: 40
-  		}, options)
-  		console.log('init')
+  		}, options);
+
+
+  		var $this = $(this), data = $this.data('autocomplete'), storage = $('div');
+
+  		if (!data) {
+
+          $this.data('autocomplete', {
+            target:  $this,
+            storage: storage
+          })
+
+  		  return this.each(function() {
+            $(this).val('tatata1');
+
+          })
+  		}
   	},
   	destroy: function() {
-  		console.log('destroy')
+  		console.log('destroy');
   	}
   }
 
@@ -23,9 +38,6 @@
       $.error( 'Метод с именем ' +  method + ' не существует для Zepto.autocomplete' );
     }
 
-    return this.each(function() {
-      $(this).val('tatata')
-    })
   }
 
 })(Zepto)
