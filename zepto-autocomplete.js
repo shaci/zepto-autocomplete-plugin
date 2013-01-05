@@ -7,28 +7,35 @@
   			height: 40
   		}, options);
 
-  		var $this = this, data = $this.data('autocomplete');
+  		var $this = this;
+      //Для контроля инициализации
+      var data = $this.attr('data-autocomplete');
+      var storage = null;
   		//если не проинициализирован для данного элемента
   		if (!data) {
-  	      var storage = $('<div>');
-          $this.data('autocomplete', {
-            target:  $this,
-            storage: storage
-          })
+        console.log('init')
+        createStorage();
   		  return $this.each(function() {
-            $this.bind('click.autocomplete', createStorage)
-          })
+          $this.bind('focus.autocomplete', computeStorage)
+        })
   		}
+
+      function createStorage() {
+        storage = $('<div>');
+        $('body').append(storage);
+        var position = { left : $this.offset().left , top : $this.offset().top + $this.height() }
+        storage.width($this.width() - 2);
+        storage.css('position', 'absolute').css('top', position.top).css('left', position.left).css('border', '1px solid black').css('background', 'white');
+        $this.attr('data-autocomplete', 'true')
+        storage.hide();
+      }
   		//создание дива с подсказками
-  		function createStorage() {
-  		  var position = { left : $this.offset().left , top : $this.offset().top + $this.height() }
-  		  storage.width($this.width());
-  		  storage.css('position', 'absolute').css('top', position.top).css('left', position.left);
+  		function computeStorage() {
   		  for (var i = 0; i < settings.data.length; i++) {
   		  	var record = $('<div>').html(settings.data[i]);
   		  	storage.append(record);
   		  }
-  		  $('body').append(storage)
+        storage.show();
   		}
   	},
   	destroy: function() {
