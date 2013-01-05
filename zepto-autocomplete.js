@@ -11,14 +11,13 @@
       //Для контроля инициализации
       var data = $this.attr('data-autocomplete');
       var storage = null;
-      var value   = '';
       var current = null;
   		//если не проинициализирован для данного элемента
   		if (!data) {
         console.log('init')
         createStorage();
   		  return $this.each(function() {
-          $this.bind('focus.autocomplete', computeStorage).bind('keyup.autocomplete', computeStorage).bind('blur.autocomplete', closeStorage)
+          $this.bind('focus.autocomplete', computeStorage).bind('keyup.autocomplete', keyHandler).bind('blur.autocomplete', closeStorage)
         })
   		}
 
@@ -38,8 +37,27 @@
       function chooseRecord(e) {
         $this.val(e.target.innerHTML)
       }
+
+      function computeStorage() {
+        storage.empty();
+        storage.hide();
+        var value = $this.val();
+        for (var i = 0; i < settings.data.length; i++) {
+          var string = settings.data[i];
+          if (string.indexOf(value) != -1 && value) {
+            var record = $('<div>').html(settings.data[i]);
+            storage.append(record);
+          }
+        }
+        if (storage.find('div').length)  {
+          current = storage.find('div:first-child');
+          current.css('background', 'grey');
+          storage.show();
+        }
+      }
+
   		//создание дива с подсказками
-  		function computeStorage(e) {
+  		function keyHandler(e) {
         switch (e.keyCode) {
           case 37:
             break;
@@ -67,21 +85,7 @@
             }
             break;
           default:
-            storage.empty();
-            storage.hide();
-            value = $this.val();
-            for (var i = 0; i < settings.data.length; i++) {
-              var string = settings.data[i];
-              if (string.indexOf(value) != -1 && value) {
-                var record = $('<div>').html(settings.data[i]);
-                storage.append(record);
-              }
-            }
-            if (storage.find('div').length)  {
-              current = storage.find('div:first-child');
-              current.css('background', 'grey');
-              storage.show();
-            }
+            computeStorage();
             break;
         }
   		}
