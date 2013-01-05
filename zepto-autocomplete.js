@@ -28,16 +28,15 @@
         var position = { left : $this.offset().left , top : $this.offset().top + $this.height() }
         storage.width($this.width() - 2);
         storage.css('position', 'absolute').css('top', position.top).css('left', position.left).css('border', '1px solid black').css('background', 'white');
-        $this.attr('data-autocomplete', 'true')
-        storage.bind('click', 'alert(3)');
+        $this.attr('data-autocomplete', 'true');
+        storage.on('mousedown.autocomplete', 'div', chooseRecord)
         storage.hide();
       }
       function closeStorage() {
         storage.hide();
       }
-      function chooseRecord() {
-        console.log('ds')
-        console.log(e.target)
+      function chooseRecord(e) {
+        $this.val(e.target.innerHTML)
       }
   		//создание дива с подсказками
   		function computeStorage(e) {
