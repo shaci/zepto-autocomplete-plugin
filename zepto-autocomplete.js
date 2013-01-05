@@ -60,9 +60,11 @@
             }
             break;
           case 13:
-            $this.val(current.html());
-            storage.empty();
-            storage.hide();
+            if (storage.width()) {
+              $this.val(current.html());
+              storage.empty();
+              storage.hide();
+            }
             break;
           default:
             storage.empty();
