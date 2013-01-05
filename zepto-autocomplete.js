@@ -11,12 +11,14 @@
       //Для контроля инициализации
       var data = $this.attr('data-autocomplete');
       var storage = null;
+      var value   = '';
+      var current = null;
   		//если не проинициализирован для данного элемента
   		if (!data) {
         console.log('init')
         createStorage();
   		  return $this.each(function() {
-          $this.bind('focus.autocomplete', computeStorage)
+          $this.bind('focus.autocomplete', computeStorage).bind('keyup.autocomplete', computeStorage).bind('blur.autocomplete', closeStorage)
         })
   		}
 
@@ -27,15 +29,60 @@
         storage.width($this.width() - 2);
         storage.css('position', 'absolute').css('top', position.top).css('left', position.left).css('border', '1px solid black').css('background', 'white');
         $this.attr('data-autocomplete', 'true')
+        storage.bind('click', 'alert(3)');
         storage.hide();
       }
+      function closeStorage() {
+        storage.hide();
+      }
+      function chooseRecord() {
+        console.log('ds')
+        console.log(e.target)
+      }
   		//создание дива с подсказками
-  		function computeStorage() {
-  		  for (var i = 0; i < settings.data.length; i++) {
-  		  	var record = $('<div>').html(settings.data[i]);
-  		  	storage.append(record);
-  		  }
-        storage.show();
+  		function computeStorage(e) {
+        switch (e.keyCode) {
+          case 37:
+            break;
+          case 39:
+            break;
+          case 38:
+            if (current.prev().length) {
+              current.css('background', 'white');
+              current = current.prev();
+              current.css('background', 'grey');
+            }
+            break;
+          case 40:
+            if (current.next().length) {
+              current.css('background', 'white');
+              current = current.next();
+              current.css('background', 'grey');
+            }
+            break;
+          case 13:
+            $this.val(current.html());
+            storage.empty();
+            storage.hide();
+            break;
+          default:
+            storage.empty();
+            storage.hide();
+            value = $this.val();
+            for (var i = 0; i < settings.data.length; i++) {
+              var string = settings.data[i];
+              if (string.indexOf(value) != -1 && value) {
+                var record = $('<div>').html(settings.data[i]);
+                storage.append(record);
+              }
+            }
+            if (storage.find('div').length)  {
+              current = storage.find('div:first-child');
+              current.css('background', 'grey');
+              storage.show();
+            }
+            break;
+        }
   		}
   	},
   	destroy: function() {
