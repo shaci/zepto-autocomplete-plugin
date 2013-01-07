@@ -4,17 +4,25 @@
   	<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
   	<script type = "text/javascript" src = "zepto-1.0rc1.js"></script>
   	<script type = "text/javascript" src = "zepto-autocomplete.js"></script>
+
   	<script type = "text/javascript">
       (function($){
-
       	$(function(){
-          $('#countries').autoComplete({data: ['США','Россия','Германия','Канада','ЮАР','Китай','Индия','Белоруссия','Украина','Иран','Сирия','Бразилия']})
-          $('#continents').autoComplete({data: ['Северная Америка','Южная Америка','Евразия', 'Африка', 'Австралия', 'Антарктида']})
-          $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']})
-          //!! это второе применение плагина не сработает, и не должно сработать, стоит защита от вторичного применения
-          $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']})
-      	})
 
+          $('#on_plugin').change(function(){
+            $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']});
+          });
+          $('#off_plugin').change(function() {
+            $('#cities').autoComplete('destroy');
+          });
+
+          $('#countries').autoComplete({data: ['США','Россия','Германия','Канада','ЮАР','Китай','Индия','Белоруссия','Украина','Иран','Сирия','Бразилия']});
+          $('#continents').autoComplete({data: ['Северная Америка','Южная Америка','Евразия', 'Африка', 'Австралия', 'Антарктида']});
+          $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']});
+          //!! это второе применение плагина не сработает, и не должно сработать, стоит защита от вторичного применения
+          $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']});
+
+      	});
       }(Zepto))
   	</script>
     <style type = "text/css">
@@ -27,10 +35,17 @@
       }
       fieldset label  {color: white;}
       .long           {width:  250px;}
+      .informer       {
+        background-color: red;
+        padding: 20px 0 20px 10px;
+        border: 1px solid black;
+        color: white;
+        font-size: 19px;
+      }
     </style>
   </head>
   <body>
-  <p>Демо плагина автозаполнения (zepto framework)</p>
+  <p class = "informer">Демо плагина автозаполнения (zepto framework)</p>
   <form>
   	<fieldset>
       <legend>Пример</legend>
@@ -38,7 +53,13 @@
         <label for = "continents">Континенты: </label><input type = "text" id = "continents"></input>
         <br/>
         <label for = "cities">Города: &nbsp;</label><input type = "text" id = "cities"></input>
+        <br/>
+        <p><b>Включение/выключение плагина для поля с городами</b><br/>
+          <input type = "radio" value = "on"  id = "on_plugin" name = "group1" checked>Включить плагин<br/>
+          <input type = "radio" value = "off" id = "off_plugin" name = "group1">Выключить плагин<br/>
+        </p>
     </fieldset>
+
   </form>
   </body>
 </html>

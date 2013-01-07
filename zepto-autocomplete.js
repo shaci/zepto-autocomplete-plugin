@@ -1,5 +1,4 @@
 (function($){
-
   var methods = {
   	init:    function(options) {
   		var settings = $.extend({
@@ -9,8 +8,7 @@
 
   		var $this = this;
       //Для контроля инициализации
-      var data = $this.attr('data-autocomplete');
-      var storage = null;
+      var data = $this[0].externalData;
       var current = null;
   		//если не проинициализирован для данного элемента
   		if (!data) {
@@ -22,16 +20,20 @@
   		}
 
       function createStorage() {
-        storage = $('<div>');
+        var storage = $('<div>');
         $('body').append(storage);
         var position = { left : $this.offset().left , top : $this.offset().top + $this.height() }
         storage.width($this.width() - 2);
         storage.css('position', 'absolute').css('top', position.top).css('left', position.left).css('border', '1px solid black').css('background', 'white');
         $this.attr('data-autocomplete', 'true');
-        storage.on('mousedown.autocomplete', 'div', chooseRecord)
+        storage.on('mousedown.autocomplete', 'div', chooseRecord);
+        $this[0].externalData = {
+          storage: storage
+        };
         storage.hide();
       }
       function closeStorage() {
+        var storage = $this[0].externalData.storage;
         storage.hide();
       }
       function chooseRecord(e) {
@@ -39,6 +41,7 @@
       }
 
       function computeStorage() {
+        var storage = $this[0].externalData.storage;
         storage.empty();
         storage.hide();
         var value = $this.val();
@@ -58,6 +61,7 @@
 
   		//создание дива с подсказками
   		function keyHandler(e) {
+        var storage = $this[0].externalData.storage;
         switch (e.keyCode) {
           case 37:
             break;
@@ -92,6 +96,13 @@
   	},
   	destroy: function() {
   		console.log('destroy');
+      return this.each(function() {
+        $this = $(this);
+        $this.unbind('.autocomplete');
+        var storage = this.externalData.storage;
+        $(storage).remove();
+        delete this.externalData;
+      })
   	}
   }
 
