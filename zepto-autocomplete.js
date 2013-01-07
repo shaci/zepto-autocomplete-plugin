@@ -24,6 +24,7 @@
         $('body').append(storage);
         var position = { left : $this.offset().left , top : $this.offset().top + $this.height() }
         storage.width($this.width() - 2);
+        storage.css('zIndex', 1000);
         storage.css('position', 'absolute').css('top', position.top).css('left', position.left).css('border', '1px solid black').css('background', 'white');
         $this.attr('data-autocomplete', 'true');
         storage.on('mousedown.autocomplete', 'div', chooseRecord);
@@ -107,8 +108,14 @@
       })
   	},
     add: function(field) {
+      //если не массив
+      if (Object.prototype.toString.call(field) != '[object Array]') {
+        //попробуем превратить в массив
+        field = [field];
+      }
       $this = this;
-      $this[0].externalData.settings.data.push(field);
+      var newArr = $this[0].externalData.settings.data.concat(field);
+      $this[0].externalData.settings.data = newArr;
     }
   }
 
