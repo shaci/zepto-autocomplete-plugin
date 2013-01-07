@@ -28,7 +28,8 @@
         $this.attr('data-autocomplete', 'true');
         storage.on('mousedown.autocomplete', 'div', chooseRecord);
         $this[0].externalData = {
-          storage: storage
+          storage:  storage,
+          settings: settings
         };
         storage.hide();
       }
@@ -41,7 +42,8 @@
       }
 
       function computeStorage() {
-        var storage = $this[0].externalData.storage;
+        var storage  = $this[0].externalData.storage;
+        var settings = $this[0].externalData.settings;
         storage.empty();
         storage.hide();
         var value = $this.val();
@@ -103,7 +105,11 @@
         $(storage).remove();
         delete this.externalData;
       })
-  	}
+  	},
+    add: function(field) {
+      $this = this;
+      $this[0].externalData.settings.data.push(field);
+    }
   }
 
   $.fn.autoComplete = function(method) {

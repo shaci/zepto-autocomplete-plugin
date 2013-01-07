@@ -16,11 +16,20 @@
             $('#cities').autoComplete('destroy');
           });
 
+          $('#add').click(function() {
+            if($('#addCity').val()) {
+              $('#cities').autoComplete('add', $('#addCity').val());
+              $('#addCity').val('');
+            }
+            return false;
+          })
+
           $('#countries').autoComplete({data: ['США','Россия','Германия','Канада','ЮАР','Китай','Индия','Белоруссия','Украина','Иран','Сирия','Бразилия']});
           $('#continents').autoComplete({data: ['Северная Америка','Южная Америка','Евразия', 'Африка', 'Австралия', 'Антарктида']});
           $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']});
           //!! это второе применение плагина не сработает, и не должно сработать, стоит защита от вторичного применения
           $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон']});
+
 
       	});
       }(Zepto))
@@ -58,6 +67,8 @@
           <input type = "radio" value = "on"  id = "on_plugin" name = "group1" checked>Включить плагин<br/>
           <input type = "radio" value = "off" id = "off_plugin" name = "group1">Выключить плагин<br/>
         </p>
+
+        <label for = "addCity">Добавить город</label><input type = "text" id = "addCity"></input><button id = "add">+</button>
     </fieldset>
 
   </form>
