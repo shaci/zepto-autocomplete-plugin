@@ -108,6 +108,16 @@
       })
   	},
     add: function(field) {
+
+      function unique(arr) {
+        var obj = {};
+        for(var i=0; i<arr.length; i++) {
+          var str = arr[i];
+          obj[str] = true;
+        }
+          return Object.keys(obj);
+      }
+
       //если не массив
       if (Object.prototype.toString.call(field) != '[object Array]') {
         //попробуем превратить в массив
@@ -115,7 +125,9 @@
       }
       $this = this;
       var newArr = $this[0].externalData.settings.data.concat(field);
+      newArr     = unique(newArr);
       $this[0].externalData.settings.data = newArr;
+      console.log($this[0].externalData);
     }
   }
 
