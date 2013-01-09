@@ -10,7 +10,17 @@
       	$(function(){
 
           $('#on_plugin').change(function(){
-            $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон', 'Лиссабон', 'Бразилиа', 'Амстердам', 'Брюссель', 'Осло', 'Хельсинки', 'Копенгаген'], maxOptions: 5});
+            var scrolling = true;
+            scrollable  = $('#scrollable').is(':checked') ? true : false;
+
+            var maxOptions = $('#maxOptions').val();
+
+            if (maxOptions) {
+              $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон', 'Лиссабон', 'Бразилиа', 'Амстердам', 'Брюссель', 'Осло', 'Хельсинки', 'Копенгаген'], maxOptions: maxOptions, scrollable: scrollable});
+            }
+            else {
+              $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон', 'Лиссабон', 'Бразилиа', 'Амстердам', 'Брюссель', 'Осло', 'Хельсинки', 'Копенгаген'], scrollable: scrollable});
+            }
           });
           $('#off_plugin').change(function() {
             $('#cities').autoComplete('destroy');
@@ -28,7 +38,7 @@
           $('#continents').autoComplete({data: ['Северная Америка','Южная Америка','Евразия', 'Африка', 'Австралия', 'Антарктида']});
           $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Дели', 'Лондон', 'Рим', 'Мадрид', 'Париж', 'Берлин', 'Вашингтон', 'Лиссабон', 'Бразилиа', 'Амстердам', 'Брюссель', 'Осло', 'Хельсинки', 'Копенгаген'], maxOptions: 5, scrollable: true});
           //!! это второе применение плагина не сработает, и не должно сработать, стоит защита от вторичного применения
-          //$('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Мадрид', 'Париж',  'Вашингтон'], maxOptions: 5});
+          $('#cities').autoComplete({data: ['Москва', 'Санкт-Петербург', 'Мадрид', 'Париж',  'Вашингтон'], maxOptions: 5});
       	});
       }(Zepto))
   	</script>
@@ -61,9 +71,11 @@
         <br/>
         <label for = "cities">Города: &nbsp;</label><input autocomplete = "off" type = "text" id = "cities"></input>
         <br/>
-        <p><b>Включение/выключение плагина для поля с городами</b><br/>
+        <p style ="color: white"><b>Включение/выключение плагина для поля с городами</b><br/>
           <input type = "radio" value = "on"  id = "on_plugin" name = "group1" checked>Включить плагин<br/>
           <input type = "radio" value = "off" id = "off_plugin" name = "group1">Выключить плагин<br/>
+          <input type = "checkbox" name = "scrollable" id = "scrollable" checked>Скроллинг</input><br/>
+          <label for = "maxOptions">Допустимое максимальное количество вариантов</label><input type = "text" id = "maxOptions"></input>
         </p>
         <label for = "addCity">Добавить город</label><input type = "text" id = "addCity"></input><button id = "add">+</button>
     </fieldset>
