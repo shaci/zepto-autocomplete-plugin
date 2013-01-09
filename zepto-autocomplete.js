@@ -5,7 +5,9 @@
   			data:   [],
   			height: 20,
         maxOptions: 100,
-        scrollable: true
+        scrollable: true,
+        optionBackground:  '#FFFFFF',
+        currentBackground: '#EBE1E5'
   		}, options);
 
   		var $this = this;
@@ -73,7 +75,7 @@
         }
         if (storage.find('div').length)  {
           current = storage.find('div:first-child');
-          current.css('background', 'grey');
+          current.css('background', settings.currentBackground);
           storage.show();
         }
       }
@@ -84,9 +86,9 @@
           if (scroll) {
             storage[0].scrollTop -= settings.height;
           }
-          current.css('background', 'white');
+          current.css('background', settings.optionBackground);
           current = current.prev();
-          current.css('background', 'grey');
+          current.css('background', settings.currentBackground);
         }
       }
 
@@ -96,9 +98,9 @@
           if (scroll) {
             storage[0].scrollTop += settings.height;
           }
-          current.css('background', 'white');
+          current.css('background', settings.optionBackground);
           current = current.next();
-          current.css('background', 'grey');
+          current.css('background', settings.currentBackground);
         }
       }
 
