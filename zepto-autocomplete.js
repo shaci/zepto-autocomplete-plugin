@@ -66,7 +66,7 @@
         settings.data.sort();
         for (var i = 0; i < settings.data.length; i++) {
           var string = settings.data[i];
-          if (string.indexOf(value) != -1 && value) {
+          if (string.toLowerCase().indexOf(value.toLowerCase()) != -1 && value) {
             var record = $('<div>').html(settings.data[i]).css('height', settings.height + 'px');
             storage.append(record);
           }
