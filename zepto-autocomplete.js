@@ -6,8 +6,9 @@
   			height: 20,
         maxOptions: 100,
         scrollable: true,
-        optionBackground:  '#FFFFFF',
-        currentBackground: '#EBE1E5'
+        optionBackground:    '#FFFFFF',
+        currentBackground:   '#EBE1E5'
+        //mouseOverBackground: '#F7F0F3'
   		}, options);
 
   		var $this = this;
