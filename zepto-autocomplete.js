@@ -159,6 +159,8 @@
       })
   	},
     add: function(field) {
+      $this = this;
+
       function unique(arr) {
         var obj = {};
         for(var i=0; i<arr.length; i++) {
@@ -172,10 +174,18 @@
         //попробуем превратить в массив
         field = [field];
       }
-      $this = this;
+
       var newArr = $this[0].externalData.settings.data.concat(field);
       newArr     = unique(newArr);
-      $this[0].externalData.settings.data = newArr.sort();
+      var data = $this[0].externalData;
+      data.settings.data = newArr.sort();
+
+      if (data.settings.maxOptions > data.settings.data.length) {
+        data.storage.css('max-height', data.settings.data.length * data.settings.height + 'px');
+      } else {
+        data.storage.css('max-height', data.settings.maxOptions * data.settings.height + 'px');
+      }
+
     }
   }
 
