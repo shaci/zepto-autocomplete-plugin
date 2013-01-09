@@ -63,7 +63,7 @@
         storage.empty();
         storage.hide();
         var value = $this.val();
-
+        settings.data.sort();
         for (var i = 0; i < settings.data.length; i++) {
           var string = settings.data[i];
           if (string.indexOf(value) != -1 && value) {
@@ -172,12 +172,11 @@
       $this = this;
       var newArr = $this[0].externalData.settings.data.concat(field);
       newArr     = unique(newArr);
-      $this[0].externalData.settings.data = newArr;
+      $this[0].externalData.settings.data = newArr.sort();
     }
   }
 
   $.fn.autoComplete = function(method) {
-
   	if ( methods[method] ) {
       return methods[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
     } else if ( typeof method === 'object' || ! method ) {
@@ -185,7 +184,6 @@
     } else {
       $.error( 'Метод с именем ' +  method + ' не существует для Zepto.autocomplete' );
     }
-
   }
 
 })(Zepto)
